@@ -10,6 +10,9 @@ class App extends Component {
     videos: [],
     selectedVideo: null
   };
+  componentDidMount(){
+    this.onQuerySubmit('Dog');
+  }
   onQuerySubmit = query => {
     console.log(query);
     youtube.get('/search',{
@@ -17,7 +20,11 @@ class App extends Component {
         q: query
       }
     })
-    .then(response => this.setState({videos: response.data.items}))
+    .then(response => this.setState({
+      videos: response.data.items,
+      selectedVideo: response.data.items[0]
+
+    }))
 
   };
 
@@ -29,8 +36,17 @@ class App extends Component {
       <div className="ui container">
         <h1>Hello Videos</h1>
         <SearchBar onSearchSubmit = {this.onQuerySubmit}/>
-        <VideoDetails video={this.state.selectedVideo}/>
-        <VideoList onVideoSelect = {this.onVideoSelect} videos={this.state.videos}/>
+          <div className="ui grid">
+            <div className="ui row">
+              <div className="eleven wide column">
+                <VideoDetails video={this.state.selectedVideo}/>
+              </div>
+              <div className="five wide column">
+                <VideoList onVideoSelect = {this.onVideoSelect} videos={this.state.videos}/>
+              </div>
+            </div>
+          </div>
+
       </div>
       )
   }
