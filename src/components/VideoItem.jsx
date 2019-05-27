@@ -5,7 +5,7 @@ const VideoItem = ({video, onVideoSelect}) => {
       <div onClick={() => onVideoSelect(video)} className="ui middle aligned selection list">
         <div className="item">
           <img className="ui avatar image"
-            alt='thumbnail'
+            alt={video.snippet.title}
             src={video.snippet.thumbnails.medium.url}
           />
           <div className="content">
